@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>AMG STORE - Free Fire ID</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+body{margin:0;font-family:Arial;background:#020617;color:#fff}
+.header{background:linear-gradient(90deg,#7c3aed,#2563eb);padding:15px;text-align:center;font-size:22px;font-weight:bold}
+.card{background:#0f172a;margin:15px;padding:15px;border-radius:12px;box-shadow:0 0 20px #22c55e88;animation:glow 2s infinite alternate}
+@keyframes glow{from{box-shadow:0 0 10px #22c55e55}to{box-shadow:0 0 25px #22c55eaa}}
+.hidden{display:none}
+img{width:100%;border-radius:10px}
+.price{font-size:22px;color:#22c55e;margin:10px 0}
+button{width:100%;padding:12px;font-size:18px;background:#22c55e;border:none;border-radius:8px}
+input{width:100%;padding:10px;margin-top:10px;border-radius:6px;border:none}
+.footer{text-align:center;padding:15px;font-size:14px;color:#94a3b8}
+</style>
+</head>
+<body>
+
+<div class="header">AMG STORE – FREE FIRE ID SELLER</div>
+
+<!-- LOGIN -->
+<div id="login" class="card">
+<h3>Login / Signup</h3>
+<input placeholder="Email">
+<input type="password" placeholder="Password">
+<button onclick="openShop()">Continue</button>
+</div>
+
+<!-- SHOP -->
+<div id="shop" class="card hidden">
+<img src="https://i.imgur.com/0y8Ftya.jpg">
+<div class="price">₹100</div>
+<button onclick="buy()">BUY NOW</button>
+</div>
+
+<!-- PAYMENT -->
+<div id="pay" class="card hidden">
+<h3>Pay ₹100</h3>
+<p><b>UPI ID:</b> 9719211706-2@ybl</p>
+<p><b>Name:</b> MOHD FARHAN</p>
+
+<img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=upi://pay?pa=9719211706-2@ybl&pn=MOHD%20FARHAN&am=100&cu=INR">
+
+<p>Payment ke baad screenshot upload karo</p>
+<input type="file">
+<button onclick="done()">Payment Done</button>
+</div>
+
+<!-- SUCCESS -->
+<div id="done" class="card hidden">
+<h3>Payment Successful ✅</h3>
+<p>ID 5–10 minute me WhatsApp par bhej di jayegi</p>
+<b>Support: 9719211706</b>
+</div>
+
+<div class="footer">© AMG STORE | Trusted Seller</div>
+
+<script>
+function openShop(){
+ document.getElementById("login").style.display="none";
+ document.getElementById("shop").classList.remove("hidden");
+}
+function buy(){
+ document.getElementById("shop").style.display="none";
+ document.getElementById("pay").classList.remove("hidden");
+}
+function done(){
+ document.getElementById("pay").style.display="none";
+ document.getElementById("done").classList.remove("hidden");
+}
+</script>
+
+</body>
+</html>
