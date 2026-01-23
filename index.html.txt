@@ -4,87 +4,23 @@
 <meta charset="UTF-8">
 <title>AMG STORE</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <style>
-body{
-margin:0;
-font-family:Arial, sans-serif;
-background:#050505;
-color:white;
-}
+body{margin:0;font-family:Arial;background:#050505;color:white}
 .hidden{display:none}
-.header{
-text-align:center;
-padding:15px;
-font-size:26px;
-color:#00ffcc;
-text-shadow:0 0 15px #00ffcc;
-}
-.banner img{
-width:100%;
-border-bottom:3px solid #00ffcc;
-}
-.center{
-display:flex;
-justify-content:center;
-align-items:center;
-height:100vh;
-}
-.btn{
-padding:15px 30px;
-background:#00ffcc;
-border:none;
-font-size:18px;
-font-weight:bold;
-border-radius:8px;
-cursor:pointer;
-box-shadow:0 0 15px #00ffcc;
-}
-.cards{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(160px,1fr));
-gap:15px;
-padding:15px;
-}
-.card{
-background:#111;
-border-radius:12px;
-padding:10px;
-box-shadow:0 0 12px #00ffcc;
-}
-.card img{
-width:100%;
-border-radius:10px;
-}
-.price{
-margin:8px 0;
-font-size:18px;
-color:#00ffcc;
-}
-.buy{
-width:100%;
-padding:10px;
-background:#00ffcc;
-border:none;
-border-radius:6px;
-font-size:16px;
-font-weight:bold;
-cursor:pointer;
-}
-.note{
-text-align:center;
-font-size:14px;
-color:#ccc;
-padding-bottom:20px;
-}
-input{
-width:100%;
-padding:10px;
-margin:8px 0;
-border-radius:6px;
-border:none;
-}
+.header{text-align:center;padding:15px;font-size:26px;color:#00ffcc;text-shadow:0 0 15px #00ffcc}
+.center{display:flex;justify-content:center;align-items:center;height:100vh}
+.btn{padding:14px 30px;background:#00ffcc;border:none;border-radius:8px;font-size:18px;font-weight:bold;cursor:pointer;box-shadow:0 0 15px #00ffcc}
+.banner img{width:100%;border-bottom:3px solid #00ffcc}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:15px;padding:15px}
+.card{background:#111;padding:10px;border-radius:12px;box-shadow:0 0 12px #00ffcc}
+.card img{width:100%;border-radius:10px}
+.price{color:#00ffcc;font-size:18px;margin:8px 0}
+.buy{width:100%;padding:10px;background:#00ffcc;border:none;border-radius:6px;font-size:16px;font-weight:bold}
+.note{text-align:center;font-size:14px;color:#ccc;padding:15px}
+input{width:100%;padding:10px;margin:6px 0;border-radius:6px;border:none}
+.qr{margin-top:8px}
 a{color:#00ffcc;text-decoration:none}
+.adminBtn{background:red;color:white}
 </style>
 </head>
 
@@ -107,92 +43,4 @@ a{color:#00ffcc;text-decoration:none}
 
 <div class="note">
 Payment ke baad screenshot WhatsApp par bheje<br>
-<b>Support: 585095337</b><br><br>
-<a href="#" onclick="openAdminLogin()">Admin Panel</a>
-</div>
-</div>
-
-<!-- ADMIN LOGIN -->
-<div id="adminLogin" class="center hidden">
-<div>
-<input type="password" id="adminPass" placeholder="Admin Password">
-<button class="btn" onclick="checkPass()">Login</button>
-</div>
-</div>
-
-<!-- ADMIN PANEL -->
-<div id="admin" class="hidden">
-<div class="header">ADMIN PANEL</div>
-<div class="cards">
-<div class="card">
-<input placeholder="ID Image URL" id="imgUrl">
-<input placeholder="Price" id="price">
-<button class="buy" onclick="addCard()">ADD ID</button>
-</div>
-</div>
-<div class="note">
-<button class="btn" onclick="backShop()">Back to Shop</button>
-</div>
-</div>
-
-<script>
-let upi="9719211706-2@ybl";
-let adminPassword="admin123";
-let cardData=[];
-
-function openShop(){
-login.classList.add("hidden");
-shop.classList.remove("hidden");
-render();
-}
-
-function pay(price){
-window.location.href=`upi://pay?pa=${upi}&am=${price}&cu=INR`;
-}
-
-function render(){
-let html="";
-cardData.forEach(c=>{
-html+=`
-<div class="card">
-<img src="${c.img}">
-<div class="price">₹${c.price}</div>
-<button class="buy" onclick="pay('${c.price}')">BUY NOW</button>
-</div>`;
-});
-cards.innerHTML=html;
-}
-
-function openAdminLogin(){
-shop.classList.add("hidden");
-adminLogin.classList.remove("hidden");
-}
-
-function checkPass(){
-if(adminPass.value===adminPassword){
-adminLogin.classList.add("hidden");
-admin.classList.remove("hidden");
-}else{
-alert("Wrong Password");
-}
-}
-
-function addCard(){
-cardData.push({
-img:imgUrl.value,
-price:price.value
-});
-imgUrl.value="";
-price.value="";
-alert("ID Added");
-render();
-}
-
-function backShop(){
-admin.classList.add("hidden");
-shop.classList.remove("hidden");
-}
-</script>
-
-</body>
-</html>
+<b>Support: 585095337</b><br
