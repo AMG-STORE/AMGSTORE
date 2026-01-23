@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
 <meta charset="UTF-8">
 <title>AMG STORE</title>
@@ -7,83 +7,84 @@
 
 <style>
 body{
-    margin:0;
-    font-family: Arial, sans-serif;
-    background:#0b0b0b;
-    color:white;
+margin:0;
+font-family:Arial, sans-serif;
+background:#050505;
+color:white;
+}
+.hidden{display:none}
+.header{
+text-align:center;
+padding:15px;
+font-size:26px;
+color:#00ffcc;
+text-shadow:0 0 15px #00ffcc;
+}
+.banner img{
+width:100%;
+border-bottom:3px solid #00ffcc;
 }
 .center{
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+height:100vh;
 }
 .btn{
-    padding:15px 30px;
-    background:#00ffcc;
-    color:#000;
-    border:none;
-    border-radius:8px;
-    font-size:18px;
-    font-weight:bold;
-    cursor:pointer;
-    box-shadow:0 0 15px #00ffcc;
+padding:15px 30px;
+background:#00ffcc;
+border:none;
+font-size:18px;
+font-weight:bold;
+border-radius:8px;
+cursor:pointer;
+box-shadow:0 0 15px #00ffcc;
 }
-.hidden{display:none;}
-
-.header{
-    text-align:center;
-    padding:15px;
-    font-size:26px;
-    font-weight:bold;
-    color:#00ffcc;
-    text-shadow:0 0 10px #00ffcc;
+.cards{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(160px,1fr));
+gap:15px;
+padding:15px;
 }
 .card{
-    margin:20px;
-    background:#141414;
-    border-radius:12px;
-    padding:15px;
-    box-shadow:0 0 15px #00ffcc;
+background:#111;
+border-radius:12px;
+padding:10px;
+box-shadow:0 0 12px #00ffcc;
 }
 .card img{
-    width:100%;
-    border-radius:10px;
+width:100%;
+border-radius:10px;
 }
 .price{
-    margin:10px 0;
-    font-size:20px;
-    color:#00ffcc;
+margin:8px 0;
+font-size:18px;
+color:#00ffcc;
 }
 .buy{
-    width:100%;
-    padding:12px;
-    background:#00ffcc;
-    border:none;
-    font-size:18px;
-    font-weight:bold;
-    border-radius:8px;
-    cursor:pointer;
+width:100%;
+padding:10px;
+background:#00ffcc;
+border:none;
+border-radius:6px;
+font-size:16px;
+font-weight:bold;
+cursor:pointer;
 }
 .note{
-    text-align:center;
-    font-size:14px;
-    margin-top:10px;
-    color:#ccc;
+text-align:center;
+font-size:14px;
+color:#ccc;
+padding-bottom:20px;
 }
-.admin-link{
-    text-align:center;
-    margin-top:20px;
-    font-size:14px;
-}
-.admin-link a{color:#00ffcc;}
 input{
-    width:100%;
-    padding:10px;
-    margin:8px 0;
-    border-radius:6px;
-    border:none;
+width:100%;
+padding:10px;
+margin:8px 0;
+border-radius:6px;
+border:none;
 }
+a{color:#00ffcc;text-decoration:none}
 </style>
 </head>
 
@@ -91,70 +92,105 @@ input{
 
 <!-- LOGIN -->
 <div id="login" class="center">
-    <button class="btn" onclick="openShop()">Login / Continue</button>
+<button class="btn" onclick="openShop()">Login / Continue</button>
 </div>
 
 <!-- SHOP -->
 <div id="shop" class="hidden">
-    <div class="header">AMG STORE</div>
+<div class="header">AMG STORE</div>
 
-    <div class="card">
-        <img id="idImg" src="https://i.imgur.com/9QZ7RZC.png">
-        <div class="price">PRICE: ₹<span id="price">100</span></div>
-        <button class="buy" onclick="pay()">BUY NOW</button>
-        <div class="note">
-            Payment complete karne ke baad screenshot WhatsApp par bheje<br>
-            <b>Support: 585095337</b>
-        </div>
-    </div>
-
-    <div class="admin-link">
-        <a href="#" onclick="openAdmin()">Admin Panel</a>
-    </div>
+<div class="banner">
+<img src="https://i.imgur.com/2yaf2wb.png">
 </div>
 
-<!-- ADMIN -->
+<div class="cards" id="cards"></div>
+
+<div class="note">
+Payment ke baad screenshot WhatsApp par bheje<br>
+<b>Support: 585095337</b><br><br>
+<a href="#" onclick="openAdminLogin()">Admin Panel</a>
+</div>
+</div>
+
+<!-- ADMIN LOGIN -->
+<div id="adminLogin" class="center hidden">
+<div>
+<input type="password" id="adminPass" placeholder="Admin Password">
+<button class="btn" onclick="checkPass()">Login</button>
+</div>
+</div>
+
+<!-- ADMIN PANEL -->
 <div id="admin" class="hidden">
-    <div class="header">ADMIN PANEL</div>
-    <div class="card">
-        <input placeholder="Image URL" onchange="changeImg(this.value)">
-        <input placeholder="Price" onchange="changePrice(this.value)">
-        <input placeholder="UPI ID" onchange="changeUpi(this.value)">
-        <button class="buy" onclick="backShop()">Back to Shop</button>
-    </div>
+<div class="header">ADMIN PANEL</div>
+<div class="cards">
+<div class="card">
+<input placeholder="ID Image URL" id="imgUrl">
+<input placeholder="Price" id="price">
+<button class="buy" onclick="addCard()">ADD ID</button>
+</div>
+</div>
+<div class="note">
+<button class="btn" onclick="backShop()">Back to Shop</button>
+</div>
 </div>
 
 <script>
 let upi="9719211706-2@ybl";
+let adminPassword="admin123";
+let cardData=[];
 
 function openShop(){
-    login.classList.add("hidden");
-    shop.classList.remove("hidden");
+login.classList.add("hidden");
+shop.classList.remove("hidden");
+render();
 }
 
-function pay(){
-    let amount=document.getElementById("price").innerText;
-    window.location.href=`upi://pay?pa=${upi}&am=${amount}&cu=INR`;
+function pay(price){
+window.location.href=`upi://pay?pa=${upi}&am=${price}&cu=INR`;
 }
 
-function openAdmin(){
-    shop.classList.add("hidden");
-    admin.classList.remove("hidden");
+function render(){
+let html="";
+cardData.forEach(c=>{
+html+=`
+<div class="card">
+<img src="${c.img}">
+<div class="price">₹${c.price}</div>
+<button class="buy" onclick="pay('${c.price}')">BUY NOW</button>
+</div>`;
+});
+cards.innerHTML=html;
+}
+
+function openAdminLogin(){
+shop.classList.add("hidden");
+adminLogin.classList.remove("hidden");
+}
+
+function checkPass(){
+if(adminPass.value===adminPassword){
+adminLogin.classList.add("hidden");
+admin.classList.remove("hidden");
+}else{
+alert("Wrong Password");
+}
+}
+
+function addCard(){
+cardData.push({
+img:imgUrl.value,
+price:price.value
+});
+imgUrl.value="";
+price.value="";
+alert("ID Added");
+render();
 }
 
 function backShop(){
-    admin.classList.add("hidden");
-    shop.classList.remove("hidden");
-}
-
-function changeImg(v){
-    document.getElementById("idImg").src=v;
-}
-function changePrice(v){
-    document.getElementById("price").innerText=v;
-}
-function changeUpi(v){
-    upi=v;
+admin.classList.add("hidden");
+shop.classList.remove("hidden");
 }
 </script>
 
