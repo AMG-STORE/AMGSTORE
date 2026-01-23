@@ -2,74 +2,159 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>AMG STORE - Free Fire ID</title>
+<title>AMG STORE</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <style>
-body{margin:0;font-family:Arial;background:#020617;color:#fff}
-.header{background:linear-gradient(90deg,#7c3aed,#2563eb);padding:15px;text-align:center;font-size:22px;font-weight:bold}
-.card{background:#0f172a;margin:15px;padding:15px;border-radius:12px;box-shadow:0 0 20px #22c55e88;animation:glow 2s infinite alternate}
-@keyframes glow{from{box-shadow:0 0 10px #22c55e55}to{box-shadow:0 0 25px #22c55eaa}}
-.hidden{display:none}
-img{width:100%;border-radius:10px}
-.price{font-size:22px;color:#22c55e;margin:10px 0}
-button{width:100%;padding:12px;font-size:18px;background:#22c55e;border:none;border-radius:8px}
-input{width:100%;padding:10px;margin-top:10px;border-radius:6px;border:none}
-.footer{text-align:center;padding:15px;font-size:14px;color:#94a3b8}
+body{
+    margin:0;
+    font-family: Arial, sans-serif;
+    background:#0b0b0b;
+    color:white;
+}
+.center{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    height:100vh;
+}
+.btn{
+    padding:15px 30px;
+    background:#00ffcc;
+    color:#000;
+    border:none;
+    border-radius:8px;
+    font-size:18px;
+    font-weight:bold;
+    cursor:pointer;
+    box-shadow:0 0 15px #00ffcc;
+}
+.hidden{display:none;}
+
+.header{
+    text-align:center;
+    padding:15px;
+    font-size:26px;
+    font-weight:bold;
+    color:#00ffcc;
+    text-shadow:0 0 10px #00ffcc;
+}
+.card{
+    margin:20px;
+    background:#141414;
+    border-radius:12px;
+    padding:15px;
+    box-shadow:0 0 15px #00ffcc;
+}
+.card img{
+    width:100%;
+    border-radius:10px;
+}
+.price{
+    margin:10px 0;
+    font-size:20px;
+    color:#00ffcc;
+}
+.buy{
+    width:100%;
+    padding:12px;
+    background:#00ffcc;
+    border:none;
+    font-size:18px;
+    font-weight:bold;
+    border-radius:8px;
+    cursor:pointer;
+}
+.note{
+    text-align:center;
+    font-size:14px;
+    margin-top:10px;
+    color:#ccc;
+}
+.admin-link{
+    text-align:center;
+    margin-top:20px;
+    font-size:14px;
+}
+.admin-link a{color:#00ffcc;}
+input{
+    width:100%;
+    padding:10px;
+    margin:8px 0;
+    border-radius:6px;
+    border:none;
+}
 </style>
 </head>
+
 <body>
 
-<div class="header">AMG STORE – FREE FIRE ID SELLER</div>
-
 <!-- LOGIN -->
-<div id="login" class="card">
-<h3>Login / Signup</h3>
-<input placeholder="Email">
-<input type="password" placeholder="Password">
-<button onclick="openShop()">Continue</button>
+<div id="login" class="center">
+    <button class="btn" onclick="openShop()">Login / Continue</button>
 </div>
 
 <!-- SHOP -->
-<div id="shop" class="card hidden">
-<img src="https://i.imgur.com/0y8Ftya.jpg">
-<div class="price">₹100</div>
-<button onclick="buy()">BUY NOW</button>
+<div id="shop" class="hidden">
+    <div class="header">AMG STORE</div>
+
+    <div class="card">
+        <img id="idImg" src="https://i.imgur.com/9QZ7RZC.png">
+        <div class="price">PRICE: ₹<span id="price">100</span></div>
+        <button class="buy" onclick="pay()">BUY NOW</button>
+        <div class="note">
+            Payment complete karne ke baad screenshot WhatsApp par bheje<br>
+            <b>Support: 585095337</b>
+        </div>
+    </div>
+
+    <div class="admin-link">
+        <a href="#" onclick="openAdmin()">Admin Panel</a>
+    </div>
 </div>
 
-<!-- PAYMENT -->
-<div id="pay" class="card hidden">
-<h3>Pay ₹100</h3>
-<p><b>UPI ID:</b> 9719211706-2@ybl</p>
-<p><b>Name:</b> MOHD FARHAN</p>
-
-<img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=upi://pay?pa=9719211706-2@ybl&pn=MOHD%20FARHAN&am=100&cu=INR">
-
-<p>Payment ke baad screenshot upload karo</p>
-<input type="file">
-<button onclick="done()">Payment Done</button>
+<!-- ADMIN -->
+<div id="admin" class="hidden">
+    <div class="header">ADMIN PANEL</div>
+    <div class="card">
+        <input placeholder="Image URL" onchange="changeImg(this.value)">
+        <input placeholder="Price" onchange="changePrice(this.value)">
+        <input placeholder="UPI ID" onchange="changeUpi(this.value)">
+        <button class="buy" onclick="backShop()">Back to Shop</button>
+    </div>
 </div>
-
-<!-- SUCCESS -->
-<div id="done" class="card hidden">
-<h3>Payment Successful ✅</h3>
-<p>ID 5–10 minute me WhatsApp par bhej di jayegi</p>
-<b>Support: 9719211706</b>
-</div>
-
-<div class="footer">© AMG STORE | Trusted Seller</div>
 
 <script>
+let upi="9719211706-2@ybl";
+
 function openShop(){
- document.getElementById("login").style.display="none";
- document.getElementById("shop").classList.remove("hidden");
+    login.classList.add("hidden");
+    shop.classList.remove("hidden");
 }
-function buy(){
- document.getElementById("shop").style.display="none";
- document.getElementById("pay").classList.remove("hidden");
+
+function pay(){
+    let amount=document.getElementById("price").innerText;
+    window.location.href=`upi://pay?pa=${upi}&am=${amount}&cu=INR`;
 }
-function done(){
- document.getElementById("pay").style.display="none";
- document.getElementById("done").classList.remove("hidden");
+
+function openAdmin(){
+    shop.classList.add("hidden");
+    admin.classList.remove("hidden");
+}
+
+function backShop(){
+    admin.classList.add("hidden");
+    shop.classList.remove("hidden");
+}
+
+function changeImg(v){
+    document.getElementById("idImg").src=v;
+}
+function changePrice(v){
+    document.getElementById("price").innerText=v;
+}
+function changeUpi(v){
+    upi=v;
 }
 </script>
 
